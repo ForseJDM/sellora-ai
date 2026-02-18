@@ -1,0 +1,60 @@
+---
+description: Правила для бэкенда — FastAPI Python, Supabase, очередь задач, AI-эндпоинты
+globs: **/*.py, **/api/**
+alwaysApply: false
+---
+
+# Backend Rules — Sellora AI
+
+## Стек
+- FastAPI + Python 3.11+
+- Supabase (PostgreSQL) через `supabase-py`
+- Redis + Celery (очередь генераций)
+- fal.ai SDK для вызовов Flux / Kling
+- RunPod API для ComfyUI воркфлоу
+
+## Структура
+```
+backend/
+  app/
+    routers/        # эндпоинты по сущностям
+      generation.py
+      tokens.py
+      referrals.py
+      payments.py
+    services/       # бизнес-логика
+      ai/           # fal.ai, ComfyUI, LoRA
+      payments/     # YooKassa, Tinkoff
+    models/         # Pydantic схемы
+    db/             # Supabase клиент, запросы
+  worker/           # Celery задачи
+  main.py
+```
+
+## Соглашения
+- Pydantic v2 для всех схем запроса/ответа
+- Зависимости через `Depends()` — авторизация, получение юзера
+- Каждый эндпоинт списывает токены **до** запуска генерации (атомарно)
+- Генерация всегда асинхронная — отдаём `task_id`, статус по WebSocket или polling
+
+## Токены — ключевая логика
+```python
+# ✅ Правильно — атомарное списание
+async def deduct_tokens(user_id: str, amount: int) -> bool:
+    # Supabase RPC с проверкой баланса
+    result = await supabase.rpc("deduct_tokens", {"uid": user_id, "amount": amount})
+    return result.data["success"]
+
+# ❌ Неправильно — списывать после генерации
+```
+
+## AI-вызовы
+- Все вызовы fal.ai через `fal_client.run()` или `fal_client.submit()` (async)
+- Промпты усиливать через LLM перед отправкой в Flux
+- Таймаут генерации — 120 сек, при превышении — возврат токенов
+
+## Запрещено
+- Хранить API-ключи в коде (только `.env`)
+- Синхронные HTTP-запросы внутри async функций
+- `print()` вместо `logging`
+- Прямые SQL-запросы в роутерах (только через `services/` или `db/`)

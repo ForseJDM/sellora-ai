@@ -1,0 +1,45 @@
+---
+description: Правила для фронтенда — Next.js 15, Tailwind, shadcn/ui, TypeScript
+globs: **/*.tsx, **/*.ts, **/app/**
+alwaysApply: false
+---
+
+# Frontend Rules — Sellora AI
+
+## Стек
+- Next.js 15 **App Router** (только `app/` директория, без `pages/`)
+- TypeScript — строгая типизация, без `any`
+- Tailwind CSS + shadcn/ui компоненты
+- Тёмная тема по умолчанию
+
+## Структура файлов
+```
+app/
+  (auth)/         # страницы авторизации
+  (dashboard)/    # основной дашборд
+  api/            # route handlers
+components/
+  ui/             # shadcn/ui компоненты
+  shared/         # переиспользуемые компоненты
+lib/
+  supabase.ts     # клиент Supabase
+  tokens.ts       # логика токенов
+```
+
+## Соглашения
+- Компоненты — функциональные, именованный экспорт
+- Server Components по умолчанию, `'use client'` только при необходимости
+- Данные через Server Actions или Route Handlers (`/api/`)
+- Состояние — Zustand или React Context (не Redux)
+
+## UI/UX принципы
+- Дизайн вдохновлён Aidentika, но современнее и чище
+- Прогресс генерации всегда видим пользователю
+- Токен-баланс всегда в хедере
+- Все тексты — на русском языке
+
+## Запрещено
+- `pages/` директория
+- `var` вместо `const`/`let`
+- Inline-стили вместо Tailwind классов
+- `console.log` в продакшен-коде (используй `logger`)

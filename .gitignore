@@ -1,0 +1,9 @@
+node_modules/
+.next/
+.env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+
+# Служебные промпты и внутренняя документация (не для репозитория)
+SELLORA_PROMPTS.md

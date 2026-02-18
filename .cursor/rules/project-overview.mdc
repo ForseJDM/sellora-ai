@@ -1,0 +1,37 @@
+---
+description: Общий контекст проекта Sellora AI — цели, стек, бизнес-логика
+alwaysApply: true
+---
+
+# Sellora AI — Project Overview
+
+## Что это
+AI-сервис генерации продающих визуалов для маркетплейсов (WB, Ozon, Яндекс.Маркет).
+Конкурент Aidentika — в 8–15 раз дешевле, лучше качество, есть аналитика CTR.
+
+## Бизнес-модель
+- Токенная система: 1 токен = 1 фото
+- Тарифы: Бесплатно / Старт (490₽) / Креатор (1490₽) / Бизнес (3990₽)
+- Реферальная программа: 25% пожизненно в токенах
+- Видео — только в премиум-пакетах (маржа 75%+)
+
+## Технический стек
+- **Frontend**: Next.js 15 App Router, Tailwind CSS, shadcn/ui, TypeScript
+- **Backend**: FastAPI (Python)
+- **БД / Auth**: Supabase
+- **Очередь**: Redis + Celery / BullMQ
+- **AI генерация**: fal.ai (Flux.1.1 Pro/Ultra + Kling 3.0)
+- **Консистентность**: ComfyUI на RunPod (IP-Adapter + ControlNet + авто-LoRA)
+- **LLM**: Claude 4 Sonnet / Groq Llama-4 / YandexGPT 4
+- **Платежи**: YooKassa + Тинькофф + TON
+- **Хостинг**: Vercel (front) + Railway/Render (back)
+
+## Ключевые фичи MVP
+1. Цифровой двойник товара (авто-LoRA)
+2. One-Click Full Card Kit (9–12 слайдов)
+3. AI-предиктор CTR (парсинг топ-100 WB)
+4. Telegram-бот (aiogram)
+5. Реферальный дашборд
+
+## Целевая аудитория
+Селлеры WB / Ozon / Яндекс.Маркет — русскоязычный рынок РФ/СНГ.
