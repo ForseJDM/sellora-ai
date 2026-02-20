@@ -8,6 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)  
 **Репозиторий:** [github.com/ForseJDM/sellora-ai](https://github.com/ForseJDM/sellora-ai)
+
 **Сайт (Vercel):**
 [sellora-ai.vercel.app](https://sellora-ai.vercel.app/)
 
